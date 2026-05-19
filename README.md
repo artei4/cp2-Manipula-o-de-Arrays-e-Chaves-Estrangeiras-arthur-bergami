@@ -1,1 +1,0 @@
-# cp2-Manipula-o-de-Arrays-e-Chaves-Estrangeiras-arthur-bergami
