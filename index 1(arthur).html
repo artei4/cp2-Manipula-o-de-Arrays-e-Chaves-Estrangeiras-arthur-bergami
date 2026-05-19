@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIAP Music - Modelagem de Dados</title>
+    <style>
+        :root {
+            --bg-principal: #0b0b0e;
+            --bg-card: #16161a;
+            --bg-input: #222227;
+            --cor-primaria: #ed145b;
+            --cor-primaria-hover: #ff3377;
+            --txt-branco: #ffffff;
+            --txt-cinza: #a0a0a5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: var(--bg-principal); 
+            color: var(--txt-branco); 
+            padding: 40px 20px; 
+            line-height: 1.6; 
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .instrucoes { 
+            background: var(--bg-card); 
+            padding: 25px; 
+            border-radius: 12px; 
+            border-left: 6px solid var(--cor-primaria); 
+            margin-bottom: 35px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .instrucoes h1 {
+            color: var(--cor-primaria);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .instrucoes p {
+            margin-bottom: 10px;
+            color: var(--txt-cinza);
+        }
+
+        .instrucoes strong {
+            color: var(--txt-branco);
+        }
+
+        .instrucoes code { 
+            background: #2d2d35; 
+            padding: 3px 6px; 
+            border-radius: 4px; 
+            color: #ffcc00; 
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .busca-container { 
+            margin-bottom: 35px; 
+            text-align: center; 
+        }
+
+        #inputBusca {
+            width: 100%; 
+            max-width: 600px; 
+            padding: 15px 20px; 
+            border-radius: 30px;
+            border: 2px solid transparent; 
+            background: var(--bg-input); 
+            color: var(--txt-branco);
+            font-size: 1.1rem; 
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #inputBusca:focus {
+            border-color: var(--cor-primaria);
+            background: #2a2a32;
+            box-shadow: 0 0 12px rgba(237, 20, 91, 0.4);
+        }
+
+        .grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 30px; 
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .coluna { 
+            background: var(--bg-card); 
+            padding: 25px; 
+            border-radius: 12px; 
+            border: 1px solid #252529;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .coluna h2 { 
+            color: var(--cor-primaria); 
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            border-bottom: 2px solid #252529;
+            padding-bottom: 10px;
+        }
+
+        ul { 
+            list-style: none; 
+        }
+
+        li { 
+            margin-bottom: 15px; 
+            padding: 15px; 
+            background: var(--bg-input); 
+            border-radius: 8px; 
+            border-left: 4px solid var(--cor-primaria); 
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        li:hover {
+            transform: translateX(5px);
+            background: #2b2b33;
+        }
+
+        .id-badge { 
+            background: var(--cor-primaria); 
+            color: var(--txt-branco); 
+            padding: 3px 8px; 
+            border-radius: 20px; 
+            font-size: 0.75rem; 
+            font-weight: bold;
+            margin-right: 10px; 
+            display: inline-block;
+        }
+
+        .info-relacao { 
+            color: var(--cor-primaria); 
+            font-size: 0.85rem; 
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 8px; 
+        }
+
+        .trecho-musica {
+            display: block;
+            font-size: 0.9rem; 
+            color: var(--txt-cinza);
+            margin-top: 5px;
+            font-style: italic;
+            border-left: 2px solid #444;
+            padding-left: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="instrucoes">
+            <h1>🎸 Atividade 2: Modelagem e Relacionamento</h1>
+            <p><strong>1. O que vamos aprender?</strong> Vamos sair de listas simples e entrar na <strong>Modelagem de Dados</strong>. O conceito principal é o <em>Relacionamento entre Objetos</em>.</p>
+            
+            <p><strong>2. Estrutura do Código:</strong><br>
+            • <strong>Tabela Pai (Cantores):</strong> Cada objeto tem um <code>id</code> (único como um CPF).<br>
+            • <strong>Tabela Filha (Músicas):</strong> Elas usam o <code>cantorId</code> para se conectar ao pai.</p>
+            
+            <p><strong>3. Sua Missão:</strong><br>
+            • <strong>Passo 1:</strong> Adicione +5 cantores com IDs únicos no script.<br>
+            • <strong>Passo 2:</strong> Adicione +10 músicas associando corretamente os IDs.<br>
+            • <strong>Passo 3:</strong> Responda às perguntas nos comentários do script.<br>
+            • <strong>Passo 4:</strong> Teste a pesquisa em tempo real abaixo.</p>
+        </div>
+
+        <div class="busca-container">
+            <input type="text" id="inputBusca" placeholder="Pesquise por cantor, banda ou gênero musical..." onkeyup="filtrar()">
+        </div>
+
+        <div class="grid">
+            <div class="coluna">
+                <h2>🎙️ Cantores Encontrados</h2>
+                <ul id="listaCantores"></ul>
+            </div>
+            <div class="coluna">
+                <h2>🎵 Músicas Relacionadas</h2>
+                <ul id="listaMusicas"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. BASE DE DADOS ---
+
+        // PERGUNTA: Por que o 'id' do cantor não pode se repetir?
+        // RESPOSTA: Porque o 'id' funciona como uma Chave Primária (identificador único). Se ele se repetir, o sistema não conseguirá saber com precisão qual é o cantor correto no momento de fazer o relacionamento (vínculo) com as músicas.
+        const cantores = [
+            { id: 1, nome: "Legião Urbana", genero: "Rock" },
+            { id: 11, nome: "MC Kevin o Chris", genero: "Funk" },
+            { id: 21, nome: "Thiaguinho", genero: "Pagode" },
+            { id: 31, nome: "Jorge & Mateus", genero: "Sertanejo" },
+            // +5 Cantores adicionados com sucesso:
+            { id: 41, nome: "Pitty", genero: "Rock" },
+            { id: 51, nome: "Charlie Brown Jr.", genero: "Rock" },
+            { id: 61, nome: "Anitta", genero: "Pop" },
+            { id: 71, nome: "Péricles", genero: "Pagode" },
+            { id: 81, nome: "Alok", genero: "Eletrônica" }
+        ];
+
+        // PERGUNTA: Se você criar uma música da "Pitty" (id: 41), qual valor o 'cantorId' dela deve ter?
+        // RESPOSTA: O 'cantorId' deve ter exatamente o valor 41, que é o identificador que conecta a música diretamente ao registro da Pitty na tabela pai.
+        const musicas = [
+            { id: 101, titulo: "Tempo Perdido", cantorId: 1, trecho: "Todos os dias antes de dormir..." },
+            { id: 102, titulo: "Tipo Gin", cantorId: 11, trecho: "Ela é do tipo que não brinca em serviço..." },
+            { id: 103, titulo: "Melhor Eu Ir", cantorId: 21, trecho: "Melhor eu ir, tchau..." },
+            { id: 104, titulo: "Logo Eu", cantorId: 31, trecho: "Logo eu que nem pensava..." },
+            { id: 105, titulo: "Falta Você", cantorId: 21, trecho: "Falta você, o seu cheiro no meu edredom..." },
+            // +10 Músicas adicionadas relacionando corretamente os IDs:
+            { id: 106, titulo: "Na Sua Estante", cantorId: 41, trecho: "Te vejo errar e não te digo nada..." },
+            { id: 107, titulo: "Admirável Chip Novo", cantorId: 41, trecho: "Pane no sistema, alguém me desconfigurou..." },
+            { id: 108, titulo: "Só os Loucos Sabem", cantorId: 51, trecho: "O homem quando esta em paz não quer guerra com ninguém..." },
+            { id: 109, titulo: "Proibida Pra Mim", cantorId: 51, trecho: "Ela achou meu cabelo engraçado..." },
+            { id: 110, titulo: "Envolver", cantorId: 61, trecho: "Que tengo el ritmo que te mueve..." },
+            { id: 111, titulo: "Show das Poderosas", cantorId: 61, trecho: "Prepara que agora é a hora..." },
+            { id: 112, titulo: "Linguagem dos Olhos", cantorId: 71, trecho: "A gente se entende no olhar..." },
+            { id: 113, titulo: "Até Que Durou", cantorId: 71, trecho: "Até que durou, mas o tempo parou para nós dois..." },
+            { id: 114, titulo: "Hear Me Now", cantorId: 81, trecho: "If you get to hear me now..." },
+            { id: 115, titulo: "Pé Lado a Lado", cantorId: 31, trecho: "Tudo que eu quero é você por perto..." }
+        ];
+
+        // --- 2. MOTOR DO SISTEMA ---
+
+        function renderizar(termoBusca = "") {
+            const listC = document.getElementById('listaCantores');
+            const listM = document.getElementById('listaMusicas');
+            
+            // PERGUNTA: Para que serve o .toLowerCase() nesta linha?
+            // RESPOSTA: Serve para transformar todo o texto digitado pelo usuário em letras minúsculas. Isso evita problemas na busca (torna ela "case-insensitive"), garantindo que "ROCK", "Rock" ou "rock" tragam o mesmo resultado.
+            const termo = termoBusca.toLowerCase();
+            
+            // PERGUNTA: Por que limpamos o innerHTML antes de começar a listar?
+            // RESPOSTA: Para limpar os resultados da busca anterior da tela. Se não fizermos isso, as novas pesquisas seriam acumuladas e adicionadas embaixo das antigas em vez de atualizar a interface.
+            listC.innerHTML = "";
+            listM.innerHTML = ""; 
+
+            // FILTRANDO CANTORES:
+            const cantoresFiltrados = cantores.filter(c => 
+                c.nome.toLowerCase().includes(termo) || 
+                c.genero.toLowerCase().includes(termo)
+            );
+
+            // EXIBINDO CANTORES:
+            cantoresFiltrados.forEach(c => {
+                listC.innerHTML += `<li><span class="id-badge">ID: ${c.id}</span> <strong>${c.nome}</strong> <span style="color: var(--txt-cinza); font-size: 0.85rem; display:block; margin-top:5px;">🎸 Gênero: ${c.genero}</span></li>`;
+            });
+
+            // LÓGICA DE CRUZAMENTO (O "Match"):
+            const idsValidos = cantoresFiltrados.map(c => c.id);
+
+            // PERGUNTA: Como o código "sabe" que a música deve sumir se o cantor dela não foi encontrado?
+            // RESPOSTA: Através do método `.includes(m.cantorId)`. O array `idsValidos` contém apenas os IDs dos cantores filtrados. Se o `cantorId` de uma música não estiver contido nessa lista, ela é excluída pelo `.filter()`.
+            const musicasFiltradas = musicas.filter(m => idsValidos.includes(m.cantorId));
+
+            // EXIBINDO MÚSICAS:
+            musicasFiltradas.forEach(m => {
+                // PERGUNTA: O que o .find abaixo está tentando localizar para a música?
+                // RESPOSTA: Ele busca dentro de toda a lista de cantores o objeto do cantor cujo `id` seja idêntico (`===`) ao `cantorId` da música correspondente, permitindo descobrir e exibir o nome do artista na tela.
+                const artista = cantores.find(c => c.id === m.cantorId);
+                
+                listM.innerHTML += `
+                    <li>
+                        <strong>${m.titulo}</strong>
+                        <span class="info-relacao">🎙️ Artista: ${artista.nome}</span>
+                        <span class="trecho-musica">"${m.trecho}"</span>
+                    </li>`;
+            });
+        }
+
+        // PERGUNTA: Esta função é ativada por qual ação do usuário?
+        // RESPOSTA: É disparada pelo evento `onkeyup` no campo de input. Isso significa que ela roda toda vez que o usuário solta uma tecla após digitar qualquer letra na barra de busca.
+        function filtrar() {
+            renderizar(document.getElementById('inputBusca').value);
+        }
+
+        // PERGUNTA FINAL: Lembra que falei em aula? 
+        // O que acontece se carregarmos a página sem chamar esta função abaixo?
+        // RESPOSTA: A página iniciaria completamente em branco, com as duas colunas vazias. Chamar a função diretamente no final serve para renderizar o estado inicial dos dados assim que o usuário abre o sistema.
+        renderizar(); 
+
+    </script>
+</body>
+</html>
